@@ -16,7 +16,7 @@ var carrierName string = ""
 var shipVia     string = "BTE"
 
 func main() {
-	config := loadConfig("TrackingUpload.cfg")
+	config := LoadConfig("TrackingUpload.cfg")
 	carrierCode = config.Carrier
 
 	fmt.Println("Carrier:", carrierCode)
@@ -25,12 +25,12 @@ func main() {
 
 	switch(carrierCode) {
 	case "UPS":
-		trackings = getUpsTrackings(config.Filename)
+		trackings = GetUpsTrackings(config.Filename)
 	case "Fedex":
-		trackings = getFedexTrackings(config.Filename)
+		trackings = GetFedexTrackings(config.Filename)
 	case "Canada Post":
-		trackings = getCanadaPostTrackings(config.Filename)
+		trackings = GetCanadaPostTrackings(config.Filename)
 	}
 
-	uploadTrackings(trackings)
+	UploadTrackings(trackings)
 }

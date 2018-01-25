@@ -17,9 +17,9 @@ type DeliveryRequest struct {
 	MailingDate    string `xml:"settlement-details>mailing-date"`
 }
 
-func getCanadaPostTrackings(filename string) []Tracking {
+func GetCanadaPostTrackings(filename string) []Tracking {
 	xmlFile, err := os.Open(filename)
-	checkError(err)
+	CheckError(err)
 	defer xmlFile.Close()
 
 	byteValue, _ := ioutil.ReadAll(xmlFile)

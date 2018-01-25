@@ -11,18 +11,18 @@ type Config struct {
 	Filename string `json:"Filename"`
 }
 
-func loadConfig(filename string) Config {
+func LoadConfig(filename string) Config {
 	input, err := os.Open(filename);
-	checkError(err)
+	CheckError(err)
 
 	// Read the config file
 	jsonBytes, err := ioutil.ReadAll(input)
 	input.Close()
-	checkError(err)
+	CheckError(err)
 
 	var cfg Config
 	err = json.Unmarshal(jsonBytes, &cfg)
-	checkError(err)
+	CheckError(err)
 
 	return cfg
 }

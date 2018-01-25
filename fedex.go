@@ -9,7 +9,7 @@ import (
     "log"
 )
 
-func getFedexTrackings(filename string) []Tracking {
+func GetFedexTrackings(filename string) []Tracking {
     csvFile, err := os.Open(filename)
     if err != nil {
         panic(err)

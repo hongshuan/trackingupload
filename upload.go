@@ -10,7 +10,7 @@ import (
 
 const APIURL = "http://localhost/shipment/tracking"
 
-func uploadTrackings(trackings []Tracking) {
+func UploadTrackings(trackings []Tracking) {
 	for _, tracking := range trackings {
 		form := url.Values{}
 		form.Add("orderId",        tracking.OrderId)
@@ -22,18 +22,18 @@ func uploadTrackings(trackings []Tracking) {
 		form.Add("shipVia",        shipVia)
 
 		req, err := http.NewRequest("POST", APIURL, strings.NewReader(form.Encode()))
-		checkError(err)
+		CheckError(err)
 
 		req.PostForm = form
 		req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
 		client := http.Client{}
 		rsp, err := client.Do(req)
-		checkError(err)
+		CheckError(err)
 		defer rsp.Body.Close()
 
 		body, err := ioutil.ReadAll(rsp.Body)
-		checkError(err)
+		CheckError(err)
 
 		log.Println(tracking.OrderId, tracking.TrackingNum, tracking.ShipDate, string(body))
 	}

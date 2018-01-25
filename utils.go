@@ -4,7 +4,7 @@ import (
     "log"
 )
 
-func checkError(err error) {
+func CheckError(err error) {
 	if err != nil {
 		log.Fatalln(err)
 	}
