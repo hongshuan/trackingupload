@@ -56,6 +56,15 @@ func FileModTime(filename string) time.Time {
 	return info.ModTime()
 }
 
+func GetFileSize(filename string) int64 {
+	info, err := os.Stat(filename)
+	if err != nil {
+		 return 0
+	}
+
+	return info.Size()
+}
+
 func SameDay(t1, t2 time.Time) bool {
 	return t1.Year() == t2.Year() &&
            t1.Month() == t2.Month() &&
