@@ -28,7 +28,7 @@ function walkxml($xml, $indent)
 
     if ($xml->children()) {
         codeln($indent, "");
-        codeln($indent, "type $varname type {");
+        codeln($indent, "type $varname struct {");
         $indent++;
         codeln($indent, "XMLName xml.Name ". '`xml:"'. $xmltag. '"`');
     } else {
