@@ -3,6 +3,7 @@ package main
 import (
     "os"
     "log"
+    "time"
 )
 
 func CheckError(err error) {
@@ -41,4 +42,22 @@ func FileIsExists(name string) bool {
 		// ??
     }
     return true
+}
+
+// today := time.Now().Format("2006-01-02")
+// modTime := FileModTime(filename).Format("2006-01-02")
+
+func FileModTime(filename string) time.Time {
+	info, err := os.Stat(filename)
+	if err != nil {
+		 return time.Time{}
+	}
+
+	return info.ModTime()
+}
+
+func SameDay(t1, t2 time.Time) bool {
+	return t1.Year() == t2.Year() &&
+           t1.Month() == t2.Month() &&
+		   t1.Day() == t2.Day()
 }
