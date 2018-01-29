@@ -6,9 +6,13 @@ import (
 	"io/ioutil"
 )
 
-type Config struct {
-	Carrier  string `json:"Carrier"`
+type Carrier struct {
+	Name     string `json:"Name"`
 	Filename string `json:"Filename"`
+}
+
+type Config struct {
+	Carriers []Carrier `json:"Carriers"`
 }
 
 func LoadConfig(filename string) Config {
