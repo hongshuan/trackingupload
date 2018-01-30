@@ -7,9 +7,11 @@ import (
     "encoding/csv"
     "fmt"
     "log"
+    "time"
 )
 
 func GetUpsTrackings(filename string) []Tracking {
+	// open csv file
     csvFile, err := os.Open(filename)
     if err != nil {
         panic(err)
@@ -18,7 +20,10 @@ func GetUpsTrackings(filename string) []Tracking {
 
     reader := csv.NewReader(bufio.NewReader(csvFile))
 
+	today := time.Now().Format("2016-01-02")
+
     var trackings []Tracking
+
     for {
         fields, err := reader.Read()
 
@@ -28,15 +33,20 @@ func GetUpsTrackings(filename string) []Tracking {
             log.Fatalln(err)
         }
 
-		date := fields[3] // "20170203143750"
-		y := date[0:4]
-		m := date[4:6]
-		d := date[6:8]
+		datetime := fields[3] // "20170203143750"
+		y := datetime[0:4]
+		m := datetime[4:6]
+		d := datetime[6:8]
+		shipDate := fmt.Sprintf("%s-%s-%s", y, m, d)
+
+		if shipDate != today {
+			continue
+		}
 
         trackings = append(trackings, Tracking{
             OrderId:     fields[1],
             TrackingNum: fields[2],
-            ShipDate:    fmt.Sprintf("%s-%s-%s", y, m, d),
+            ShipDate:    shipDate,
         })
     }
 

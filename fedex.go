@@ -7,9 +7,11 @@ import (
     "bufio"
     "encoding/csv"
     "log"
+    "time"
 )
 
 func GetFedexTrackings(filename string) []Tracking {
+	// open csv file
     csvFile, err := os.Open(filename)
     if err != nil {
         panic(err)
@@ -17,10 +19,11 @@ func GetFedexTrackings(filename string) []Tracking {
 	defer csvFile.Close()
 
     reader := csv.NewReader(bufio.NewReader(csvFile))
+	reader.Read() // skip title line
+
+	today := time.Now().Format("2016-01-02")
 
     var trackings []Tracking
-
-	reader.Read() // skip title line
 
     for {
         fields, err := reader.Read()
@@ -36,10 +39,16 @@ func GetFedexTrackings(filename string) []Tracking {
 		m := date[0:2]
 		d := date[2:4]
 
+		shipDate := fmt.Sprintf("%s-%s-%s", y, m, d)
+
+		if shipDate != today {
+			continue
+		}
+
         trackings = append(trackings, Tracking{
             OrderId:     fields[len(fields)-4],
             TrackingNum: fields[1],
-            ShipDate:    fmt.Sprintf("%s-%s-%s", y, m, d),
+            ShipDate:    shipDate,
         })
     }
 

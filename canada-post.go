@@ -2,6 +2,7 @@ package main
 
 import (
     "os"
+    "time"
 	"io/ioutil"
     "encoding/xml"
 )
@@ -27,8 +28,15 @@ func GetCanadaPostTrackings(filename string) []Tracking {
 	var delivery DeliveryRequests
 	xml.Unmarshal(byteValue, &delivery)
 
+	today := time.Now().Format("2016-01-02")
+
     var trackings []Tracking
+
 	for _, request := range delivery.Requests {
+		if request.MailingDate != today {
+			continue
+		}
+
         trackings = append(trackings, Tracking{
             OrderId:     request.OrderNumber,
             TrackingNum: request.TrackingNumber,
