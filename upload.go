@@ -1,7 +1,7 @@
 package main
 
 import (
-    "log"
+    "fmt"
 	"strings"
 	"io/ioutil"
 	"net/http"
@@ -10,7 +10,9 @@ import (
 
 const APIURL = "http://localhost/shipment/tracking"
 
-func UploadTrackings(trackings []Tracking) {
+func UploadTrackings(trackings []Tracking) []string {
+	messages := make([]string, 0)
+
 	for _, tracking := range trackings {
 		form := url.Values{}
 		form.Add("orderId",        tracking.OrderId)
@@ -35,6 +37,8 @@ func UploadTrackings(trackings []Tracking) {
 		body, err := ioutil.ReadAll(rsp.Body)
 		CheckError(err)
 
-		log.Println(tracking.OrderId, tracking.TrackingNum, tracking.ShipDate, string(body))
+		messages = append(messages, fmt.Sprintf("%s %s %s %s",
+			tracking.OrderId, tracking.TrackingNum, tracking.ShipDate, string(body)))
 	}
+	return messages
 }

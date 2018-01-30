@@ -2,6 +2,9 @@ package main
 
 import (
     "fmt"
+    "net/http"
+    "html/template"
+    "log"
 )
 
 type Tracking struct {
@@ -15,8 +18,25 @@ var carrierCode string = "UPS"
 var carrierName string = ""
 var shipVia     string = "BTE"
 
-func main() {
+func handleRequest(w http.ResponseWriter, r *http.Request) {
+    if r.Method == "GET" {
+		renderPage(w, r, nil)
+    }
+
+    if r.Method == "POST" {
+		handleUpload(w, r)
+	}
+}
+
+func handleUpload(w http.ResponseWriter, r *http.Request) {
+	data := trackingUpload()
+	renderPage(w, r, data)
+}
+
+func trackingUpload() []string {
 	config := LoadConfig("TrackingUpload.cfg")
+
+	messages := make([]string, 0)
 
 	for _, carrier := range config.Carriers {
 		carrierCode = carrier.Name
@@ -34,6 +54,30 @@ func main() {
 			trackings = GetCanadaPostTrackings(carrier.Filename)
 		}
 
-		UploadTrackings(trackings)
+		msgs := UploadTrackings(trackings)
+		messages = append(messages, msgs...)
 	}
+	return messages
+}
+
+func renderPage(w http.ResponseWriter, r *http.Request, data interface{}) {
+	tpl, err := template.New("tpl").Parse(pageTpl)
+	if err != nil {
+		http.Error(w, "500 Internal Error.", 500)
+		fmt.Println(err)
+		return
+	}
+
+	err = tpl.Execute(w, data)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+
+func main() {
+    http.HandleFunc("/", handleRequest)
+    err := http.ListenAndServe(":9090", nil)
+    if err != nil {
+        log.Fatal(err)
+    }
 }
