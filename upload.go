@@ -12,6 +12,7 @@ const APIURL = "http://localhost/shipment/tracking"
 
 func UploadTrackings(trackings []Tracking) []string {
 	messages := make([]string, 0)
+	messages = append(messages, carrierCode)
 
 	for _, tracking := range trackings {
 		form := url.Values{}
@@ -36,9 +37,11 @@ func UploadTrackings(trackings []Tracking) []string {
 
 		body, err := ioutil.ReadAll(rsp.Body)
 		CheckError(err)
+		fmt.Println(tracking.OrderId, tracking.TrackingNum, tracking.ShipDate, string(body))
 
-		messages = append(messages, fmt.Sprintf("%s %s %s %s",
-			tracking.OrderId, tracking.TrackingNum, tracking.ShipDate, string(body)))
+		messages = append(messages, fmt.Sprintf("%s %s %s",
+			tracking.OrderId, tracking.TrackingNum, tracking.ShipDate))
 	}
+
 	return messages
 }

@@ -39,6 +39,7 @@ func trackingUpload() []string {
 	messages := make([]string, 0)
 
 	for _, carrier := range config.Carriers {
+		// save to global variable
 		carrierCode = carrier.Name
 
 		fmt.Println("Carrier:", carrierCode)
@@ -55,8 +56,11 @@ func trackingUpload() []string {
 		}
 
 		msgs := UploadTrackings(trackings)
+
 		messages = append(messages, msgs...)
+		messages = append(messages, "\n")
 	}
+
 	return messages
 }
 
