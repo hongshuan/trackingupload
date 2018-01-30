@@ -22,7 +22,7 @@ func GetFedexTrackings(filename string) []Tracking {
 	reader.FieldsPerRecord = -1
 	reader.Read() // skip title line
 
-	today := time.Now().Format("2016-01-02")
+	today := time.Now().Format("2006-01-02")
 
     var trackings []Tracking
 

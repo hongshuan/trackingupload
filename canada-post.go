@@ -28,7 +28,7 @@ func GetCanadaPostTrackings(filename string) []Tracking {
 	var delivery DeliveryRequests
 	xml.Unmarshal(byteValue, &delivery)
 
-	today := time.Now().Format("2016-01-02")
+	today := time.Now().Format("2006-01-02")
 
     var trackings []Tracking
 

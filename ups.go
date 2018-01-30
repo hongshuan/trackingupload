@@ -21,7 +21,7 @@ func GetUpsTrackings(filename string) []Tracking {
 	reader := csv.NewReader(bufio.NewReader(csvFile))
 	reader.FieldsPerRecord = -1
 
-	today := time.Now().Format("2016-01-02")
+	today := time.Now().Format("2006-01-02")
 
     var trackings []Tracking
 
