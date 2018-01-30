@@ -18,7 +18,8 @@ func GetUpsTrackings(filename string) []Tracking {
     }
 	defer csvFile.Close()
 
-    reader := csv.NewReader(bufio.NewReader(csvFile))
+	reader := csv.NewReader(bufio.NewReader(csvFile))
+	reader.FieldsPerRecord = -1
 
 	today := time.Now().Format("2016-01-02")
 

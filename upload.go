@@ -37,6 +37,7 @@ func UploadTrackings(trackings []Tracking) []string {
 
 		body, err := ioutil.ReadAll(rsp.Body)
 		CheckError(err)
+
 		fmt.Println(tracking.OrderId, tracking.TrackingNum, tracking.ShipDate, string(body))
 
 		messages = append(messages, fmt.Sprintf("%s %s %s",
