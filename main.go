@@ -17,11 +17,11 @@ type Tracking struct {
 var config Config
 
 func handleRequest(w http.ResponseWriter, r *http.Request) {
-    if r.Method == "GET" {
+    if r.Method == http.MethodGet {
 		renderPage(w, r, nil)
     }
 
-    if r.Method == "POST" {
+    if r.Method == http.MethodPost {
 		r.ParseForm()
 		if (r.FormValue("btn") == "Upload") {
 			handleUpload(w, r)
@@ -33,16 +33,9 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleUpload(w http.ResponseWriter, r *http.Request) {
-	data := trackingUpload()
-	renderPage(w, r, data)
-}
-
-func trackingUpload() []string {
-
 	messages := make([]string, 0)
 
 	for _, carrier := range config.Carriers {
-		// save to global variable
 		carrierCode := carrier.Name
 
 		fmt.Println("Carrier:", carrierCode)
@@ -52,8 +45,10 @@ func trackingUpload() []string {
 		switch(carrierCode) {
 		case "UPS":
 			trackings = GetUpsTrackings(carrier.Filename)
+
 		case "Fedex":
 			trackings = GetFedexTrackings(carrier.Filename)
+
 		case "Canada Post":
 			trackings = GetCanadaPostTrackings(carrier.Filename)
 		}
@@ -64,7 +59,7 @@ func trackingUpload() []string {
 		messages = append(messages, "\n")
 	}
 
-	return messages
+	renderPage(w, r, messages)
 }
 
 func handleDownload(w http.ResponseWriter, r *http.Request) {
@@ -97,6 +92,7 @@ func handleDownload(w http.ResponseWriter, r *http.Request) {
 			messages = append(messages, "Addressbook downloaded for " + carrier.Name)
 		}
 	}
+
 	renderPage(w, r, messages)
 }
 
@@ -123,4 +119,6 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
+
+	fmt.Println("Listening on http://localhost:9090")
 }
