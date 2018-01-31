@@ -1,10 +1,12 @@
 package main
 
 import (
+    "fmt"
     "os"
     "log"
     "time"
     "strings"
+    "path/filepath"
 )
 
 func CheckError(err error) {
@@ -57,6 +59,15 @@ func FileModTime(filename string) time.Time {
 	return info.ModTime()
 }
 
+func GetFileTime(name string) (mtime time.Time, err error) {
+    fi, err := os.Stat(name)
+    if err != nil {
+        return
+    }
+    mtime = fi.ModTime()
+    return
+}
+
 func GetFileSize(filename string) int64 {
 	info, err := os.Stat(filename)
 	if err != nil {
@@ -85,4 +96,26 @@ var dtfmt = strings.NewReplacer(
 func FormatDateTime(format string, t time.Time) string {
     format = dtfmt.Replace(format)
     return t.Format(format)
+}
+
+// archiveFiles("e:/amazon/*.xml")
+func ArchiveFiles(pattern string) {
+    files, err := filepath.Glob(pattern)
+    CheckError(err)
+    //fmt.Println(files)
+
+    for _, fname := range files {
+        dir, file := filepath.Split(fname)
+        fileTime, _ := GetFileTime(fname)
+
+        newDir := dir + "archive\\" + fileTime.Format("2006-01-02");
+        os.MkdirAll(newDir, 0777)
+
+        newFile := newDir + "\\" + file
+
+        if time.Now().Sub(fileTime) > 15*24*time.Hour {
+            //os.Rename(fname, newFile)
+            fmt.Println(fname, newFile)
+        }
+    }
 }
