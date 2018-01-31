@@ -37,10 +37,6 @@ func handleUpload(w http.ResponseWriter, r *http.Request) {
 	renderPage(w, r, data)
 }
 
-func handleDownload(w http.ResponseWriter, r *http.Request) {
-	renderPage(w, r, nil)
-}
-
 func trackingUpload() []string {
 
 	messages := make([]string, 0)
@@ -69,6 +65,39 @@ func trackingUpload() []string {
 	}
 
 	return messages
+}
+
+func handleDownload(w http.ResponseWriter, r *http.Request) {
+	const URL = "http://localhost/data/addressbook/"
+
+	messages := make([]string, 0)
+
+	for _, carrier := range config.Carriers {
+		if len(carrier.Addressbook) == 0 {
+			continue
+		}
+
+		var err error
+
+		switch(carrier.Name) {
+		case "UPS":
+			err = DownloadFile(URL + "ups", carrier.Addressbook)
+
+		case "Fedex":
+			err = DownloadFile(URL + "fedex", carrier.Addressbook)
+
+		case "Canada Post":
+			err = DownloadFile(URL + "canadapos", carrier.Addressbook)
+
+		case "DHL":
+			err = DownloadFile(URL + "dhl", carrier.Addressbook)
+		}
+
+		if err == nil {
+			messages = append(messages, "Addressbook downloaded for " + carrier.Name)
+		}
+	}
+	renderPage(w, r, messages)
 }
 
 func renderPage(w http.ResponseWriter, r *http.Request, data interface{}) {
