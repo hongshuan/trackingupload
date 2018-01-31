@@ -7,6 +7,7 @@ import (
     "time"
     "strings"
     "path/filepath"
+	"container/list"
 )
 
 func CheckError(err error) {
@@ -143,4 +144,21 @@ func InsertSql(table string, columns []string, data []map[string]string) string 
     //return "INSERT INTO `" + table + "` (" + columnStr + ") VALUES\n" + valueStr + updateStr;
     return fmt.Sprintf("INSERT INTO `%s` (`%s`) VALUES\n%s\nON DUPLICATE KEY UPDATE\n%s",
         table, columnStr, valueStr, updateStr);
+}
+
+/**
+ * lines := list.New()
+ * lines.PushBack(str)
+ * arr := ListToArray(lines)
+ */
+func ListToArray(src *list.List) []string {
+	dst := make([]string, src.Len())
+
+	i := 0
+	for e := src.Front(); e != nil; e = e.Next() {
+		dst[i] = e.Value.(string)
+		i = i + 1
+	}
+
+	return dst
 }
