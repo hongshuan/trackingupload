@@ -7,8 +7,9 @@ import (
 )
 
 type Carrier struct {
-	Name     string `json:"Name"`
-	Filename string `json:"Filename"`
+	Name        string `json:"Name"`
+	Filename    string `json:"Filename"`
+	Addressbook string `json:"Addressbook"`
 }
 
 type Config struct {

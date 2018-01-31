@@ -1,16 +1,19 @@
 {
     "Carriers": [
         {
-            "Name":     "UPS",
-            "Filename": "w:/out/shipping/UPS/UPS_CSV_EXPORT.csv"
+            "Name":        "UPS",
+            "Filename":    "w:/out/shipping/UPS/UPS_CSV_EXPORT.csv",
+            "Addressbook": "worldship.csv"
         },
         {
-            "Name":     "Canada Post",
-            "Filename": "data/CPC.xml"
+            "Name":        "Canada Post",
+            "Filename":    "data/CPC.xml",
+            "Addressbook": "canadapost-addressbook.csv"
         },
         {
-            "Name":     "Fedex",
-            "Filename": "data/fedex_shipment.csv"
+            "Name":        "Fedex",
+            "Filename":    "data/fedex_shipment.csv",
+            "Addressbook": "fedex-addressbook.csv"
         }
     ]
 }
