@@ -34,7 +34,7 @@ func handleUpload(w http.ResponseWriter, r *http.Request) {
 }
 
 func trackingUpload() []string {
-	config := LoadConfig("TrackingUpload.cfg")
+	config := LoadConfig("config.json")
 
 	messages := make([]string, 0)
 
