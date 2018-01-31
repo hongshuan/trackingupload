@@ -4,6 +4,7 @@ import (
     "os"
     "log"
     "time"
+    "strings"
 )
 
 func CheckError(err error) {
@@ -69,4 +70,19 @@ func SameDay(t1, t2 time.Time) bool {
 	return t1.Year() == t2.Year() &&
            t1.Month() == t2.Month() &&
 		   t1.Day() == t2.Day()
+}
+
+// Y-m-d H:i:s => 2006-01-02 15:04:05
+var dtfmt = strings.NewReplacer(
+    "Y", "2006",
+    "m", "01",
+    "d", "02",
+    "H", "15",
+    "i", "04",
+    "s", "05",
+)
+
+func FormatDateTime(format string, t time.Time) string {
+    format = dtfmt.Replace(format)
+    return t.Format(format)
 }
