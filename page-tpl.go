@@ -7,14 +7,24 @@ var pageTpl = `
   <style type="text/css">
     body { width: 960px; margin: 0 auto; }
     pre { font-size: 16px; }
+    input { width: 100px; }
   </style>
   </head>
   <body>
     <h1>Tracking Number Upload</h1>
     <form action="/" method="post">
-	  <label>Click "Upload" Button to Upload Tracking Numbers to Server </label>
-      <input type="submit" value="Upload">
+	  <table>
+	  <tr>
+	    <td>Click "Upload" Button to Upload Tracking Numbers to Server</td>
+        <td><input type="submit" name="btn" value="Upload"></td>
+	  </tr>
+	  <tr>
+	    <td>Click "Download" Button to Download AddressBook from Server </td>
+        <td><input type="submit" name="btn" value="Download"></td>
+	  </tr>
+	  </table>
     </form>
+	<hr>
 	<pre>{{range .}}
 {{.}}{{end}}
     </pre>
