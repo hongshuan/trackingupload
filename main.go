@@ -14,9 +14,7 @@ type Tracking struct {
     ShipMethod  string
 }
 
-var carrierCode string = "UPS"
-var carrierName string = ""
-var shipVia     string = "BTE"
+var config Config
 
 func handleRequest(w http.ResponseWriter, r *http.Request) {
     if r.Method == "GET" {
@@ -24,7 +22,13 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
     }
 
     if r.Method == "POST" {
-		handleUpload(w, r)
+		r.ParseForm()
+		if (r.FormValue("btn") == "Upload") {
+			handleUpload(w, r)
+		}
+		if (r.FormValue("btn") == "Download") {
+			handleDownload(w, r)
+		}
 	}
 }
 
@@ -33,14 +37,17 @@ func handleUpload(w http.ResponseWriter, r *http.Request) {
 	renderPage(w, r, data)
 }
 
+func handleDownload(w http.ResponseWriter, r *http.Request) {
+	renderPage(w, r, nil)
+}
+
 func trackingUpload() []string {
-	config := LoadConfig("config.json")
 
 	messages := make([]string, 0)
 
 	for _, carrier := range config.Carriers {
 		// save to global variable
-		carrierCode = carrier.Name
+		carrierCode := carrier.Name
 
 		fmt.Println("Carrier:", carrierCode)
 
@@ -55,7 +62,7 @@ func trackingUpload() []string {
 			trackings = GetCanadaPostTrackings(carrier.Filename)
 		}
 
-		msgs := UploadTrackings(trackings)
+		msgs := UploadTrackings(carrierCode, trackings)
 
 		messages = append(messages, msgs...)
 		messages = append(messages, "\n")
@@ -79,8 +86,11 @@ func renderPage(w http.ResponseWriter, r *http.Request, data interface{}) {
 }
 
 func main() {
+	config = LoadConfig("config.json")
+
     http.HandleFunc("/", handleRequest)
     err := http.ListenAndServe(":9090", nil)
+
     if err != nil {
         log.Fatal(err)
     }

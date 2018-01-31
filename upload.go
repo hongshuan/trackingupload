@@ -10,9 +10,13 @@ import (
 
 const APIURL = "http://localhost/shipment/tracking"
 
-func UploadTrackings(trackings []Tracking) []string {
+func UploadTrackings(carrierCode string, trackings []Tracking) []string {
+
 	messages := make([]string, 0)
 	messages = append(messages, carrierCode)
+
+	shipVia := "BTE"
+	carrierName := ""
 
 	for _, tracking := range trackings {
 		form := url.Values{}
