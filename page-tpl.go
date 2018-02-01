@@ -16,10 +16,12 @@ var pageTpl = `
 	  <table>
 	  <tr>
 	    <td>Click "Upload" Button to Upload Tracking Numbers to Server</td>
+        <td width="10%"></td>
         <td><input type="submit" name="btn" value="Upload"></td>
 	  </tr>
 	  <tr>
 	    <td>Click "Download" Button to Download AddressBook from Server </td>
+        <td width="10%"></td>
         <td><input type="submit" name="btn" value="Download"></td>
 	  </tr>
 	  </table>
