@@ -3,7 +3,7 @@ package main
 var pageTpl = `
 <html>
   <head>
-  <title>Tracking Upload</title>
+  <title>Tracking Number & Addressbook</title>
   <style type="text/css">
     body { width: 960px; margin: 0 auto; }
     pre { font-size: 16px; }
@@ -11,7 +11,7 @@ var pageTpl = `
   </style>
   </head>
   <body>
-    <h1>Tracking Number Upload</h1>
+    <h1>Tracking Number & Addressbook</h1>
     <form action="/" method="post">
 	  <table>
 	  <tr>
