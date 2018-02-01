@@ -114,11 +114,11 @@ func main() {
 	config = LoadConfig("config.json")
 
     http.HandleFunc("/", handleRequest)
-    err := http.ListenAndServe(":9090", nil)
 
+    fmt.Println("Listening on http://localhost:9090")
+
+    err := http.ListenAndServe(":9090", nil)
     if err != nil {
         log.Fatal(err)
     }
-
-	fmt.Println("Listening on http://localhost:9090")
 }
