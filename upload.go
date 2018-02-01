@@ -10,7 +10,7 @@ import (
 
 func UploadTrackings(carrierCode string, trackings []Tracking) []string {
 
-	URL := GetTrackingUrl(config)
+	URL := config.GetTrackingUrl()
 
 	messages := make([]string, 0)
 	messages = append(messages, carrierCode)

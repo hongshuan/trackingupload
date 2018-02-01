@@ -63,7 +63,7 @@ func handleUpload(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleDownload(w http.ResponseWriter, r *http.Request) {
-	URL := GetAddressbookUrl(config)
+	URL := config.GetAddressbookUrl()
 
 	messages := make([]string, 0)
 

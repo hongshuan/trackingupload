@@ -35,7 +35,7 @@ func LoadConfig(filename string) Config {
 	return cfg
 }
 
-func GetTrackingUrl(config Config) string {
+func (config *Config) GetTrackingUrl() string {
 	if len(config.Server) == 0 {
 		config.Server = "http://localhost"
 	}
@@ -47,7 +47,7 @@ func GetTrackingUrl(config Config) string {
 	return config.Server + config.TrackingUrl
 }
 
-func GetAddressbookUrl(config Config) string {
+func (config *Config) GetAddressbookUrl() string {
 	if len(config.Server) == 0 {
 		config.Server = "http://localhost"
 	}
