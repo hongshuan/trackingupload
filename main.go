@@ -82,7 +82,7 @@ func handleDownload(w http.ResponseWriter, r *http.Request) {
 			err = DownloadFile(URL + "fedex", carrier.Addressbook)
 
 		case "Canada Post":
-			err = DownloadFile(URL + "canadapos", carrier.Addressbook)
+			err = DownloadFile(URL + "canadapost", carrier.Addressbook)
 
 		case "DHL":
 			err = DownloadFile(URL + "dhl", carrier.Addressbook)
