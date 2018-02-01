@@ -11,6 +11,12 @@ import (
 )
 
 func GetFedexTrackings(filename string) []Tracking {
+    var trackings []Tracking
+
+    if !FileExists(filename) {
+        return trackings
+    }
+
 	// open csv file
     csvFile, err := os.Open(filename)
     if err != nil {
@@ -23,8 +29,6 @@ func GetFedexTrackings(filename string) []Tracking {
 	reader.Read() // skip title line
 
 	today := time.Now().Format("2006-01-02")
-
-    var trackings []Tracking
 
     for {
         fields, err := reader.Read()

@@ -11,6 +11,12 @@ import (
 )
 
 func GetUpsTrackings(filename string) []Tracking {
+    var trackings []Tracking
+
+    if !FileExists(filename) {
+        return trackings
+    }
+
 	// open csv file
     csvFile, err := os.Open(filename)
     if err != nil {
@@ -22,8 +28,6 @@ func GetUpsTrackings(filename string) []Tracking {
 	reader.FieldsPerRecord = -1
 
 	today := time.Now().Format("2006-01-02")
-
-    var trackings []Tracking
 
     for {
         fields, err := reader.Read()

@@ -19,6 +19,12 @@ type DeliveryRequest struct {
 }
 
 func GetCanadaPostTrackings(filename string) []Tracking {
+    var trackings []Tracking
+
+    if !FileExists(filename) {
+        return trackings
+    }
+
 	xmlFile, err := os.Open(filename)
 	CheckError(err)
 	defer xmlFile.Close()
@@ -29,8 +35,6 @@ func GetCanadaPostTrackings(filename string) []Tracking {
 	xml.Unmarshal(byteValue, &delivery)
 
 	today := time.Now().Format("2006-01-02")
-
-    var trackings []Tracking
 
 	for _, request := range delivery.Requests {
 		if request.MailingDate != today {
