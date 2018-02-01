@@ -8,9 +8,9 @@ import (
 	"net/url"
 )
 
-const APIURL = "http://localhost/shipment/tracking"
-
 func UploadTrackings(carrierCode string, trackings []Tracking) []string {
+
+	URL := GetTrackingUrl(config)
 
 	messages := make([]string, 0)
 	messages = append(messages, carrierCode)
@@ -28,7 +28,7 @@ func UploadTrackings(carrierCode string, trackings []Tracking) []string {
 		form.Add("trackingNumber", tracking.TrackingNum)
 		form.Add("shipVia",        shipVia)
 
-		req, err := http.NewRequest("POST", APIURL, strings.NewReader(form.Encode()))
+		req, err := http.NewRequest("POST", URL, strings.NewReader(form.Encode()))
 		CheckError(err)
 
 		req.PostForm = form

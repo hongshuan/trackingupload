@@ -63,7 +63,7 @@ func handleUpload(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleDownload(w http.ResponseWriter, r *http.Request) {
-	const URL = "http://localhost/data/addressbook/"
+	URL := GetAddressbookUrl(config)
 
 	messages := make([]string, 0)
 

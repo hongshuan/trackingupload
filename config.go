@@ -13,7 +13,10 @@ type Carrier struct {
 }
 
 type Config struct {
-	Carriers []Carrier `json:"Carriers"`
+    Server         string    `json:"Server"`
+    TrackingUrl    string    `json:"TrackingUrl"`
+    AddressbookUrl string    `json:"AddressbookUrl"`
+	Carriers       []Carrier `json:"Carriers"`
 }
 
 func LoadConfig(filename string) Config {
@@ -30,4 +33,28 @@ func LoadConfig(filename string) Config {
 	CheckError(err)
 
 	return cfg
+}
+
+func GetTrackingUrl(config Config) string {
+	if len(config.Server) == 0 {
+		config.Server = "http://localhost"
+	}
+
+	if len(config.TrackingUrl) == 0 {
+		config.TrackingUrl = "/data/addressbook/"
+	}
+
+	return config.Server + config.TrackingUrl
+}
+
+func GetAddressbookUrl(config Config) string {
+	if len(config.Server) == 0 {
+		config.Server = "http://localhost"
+	}
+
+	if len(config.AddressbookUrl) == 0 {
+		config.AddressbookUrl = "/shipment/tracking"
+	}
+
+	return config.Server + config.AddressbookUrl
 }

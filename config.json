@@ -1,4 +1,8 @@
 {
+    "Server":         "http://localhost",
+    "TrackingUrl":    "/shipment/tracking/",
+    "AddressbookUrl": "/data/addressbook/",
+
     "Carriers": [
         {
             "Name":        "UPS",
