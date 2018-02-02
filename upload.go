@@ -33,14 +33,14 @@ func UploadTrackings(carrierCode string, trackings []Tracking) []string {
 
 		req.PostForm = form
 		req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+		//req.Close = true
 
-		client := http.Client{}
-		rsp, err := client.Do(req)
+		rsp, err := http.DefaultClient.Do(req)
 		CheckError(err)
-		defer rsp.Body.Close()
 
 		body, err := ioutil.ReadAll(rsp.Body)
 		CheckError(err)
+		rsp.Body.Close()
 
 		fmt.Println(tracking.OrderId, tracking.TrackingNum, tracking.ShipDate, string(body))
 
