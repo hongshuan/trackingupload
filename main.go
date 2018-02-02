@@ -76,16 +76,16 @@ func handleDownload(w http.ResponseWriter, r *http.Request) {
 
 		switch(carrier.Name) {
 		case "UPS":
-			err = DownloadFile(URL + "ups", carrier.Addressbook)
+			err = DownloadFile(URL + "/ups", carrier.Addressbook)
 
 		case "Fedex":
-			err = DownloadFile(URL + "fedex", carrier.Addressbook)
+			err = DownloadFile(URL + "/fedex", carrier.Addressbook)
 
 		case "Canada Post":
-			err = DownloadFile(URL + "canadapost", carrier.Addressbook)
+			err = DownloadFile(URL + "/canadapost", carrier.Addressbook)
 
 		case "DHL":
-			err = DownloadFile(URL + "dhl", carrier.Addressbook)
+			err = DownloadFile(URL + "/dhl", carrier.Addressbook)
 		}
 
 		if err == nil {

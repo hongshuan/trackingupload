@@ -41,7 +41,7 @@ func (config *Config) GetTrackingUrl() string {
 	}
 
 	if len(config.TrackingUrl) == 0 {
-		config.TrackingUrl = "/data/addressbook/"
+		config.TrackingUrl = "/data/addressbook"
 	}
 
 	return config.Server + config.TrackingUrl
