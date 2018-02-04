@@ -5,7 +5,7 @@ var pageTpl = `
   <head>
   <title>Tracking Number & Addressbook</title>
   <style type="text/css">
-    body { width: 960px; margin: 0 auto; }
+    body { width: 960px; margin: 0 auto; font-family: "Segoe UI","Helvetica Neue",Arial,sans-serif; }
     pre { font-size: 16px; }
     input { width: 100px; }
   </style>
