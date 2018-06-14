@@ -1,24 +1,12 @@
 <?php
-$note=<<<XML
-<company>
-  <staffs>
-      <staff>
-          <id>103</id>
-          <firstname>Adam</firstname>
-          <lastname>Ng</lastname>
-          <username>adamng</username>
-      </staff>
-      <staff>
-          <id>108</id>
-          <firstname>Jennifer</firstname>
-          <lastname>Loh</lastname>
-          <username>jenniferloh</username>
-      </staff>
-  </staffs>
-</company>
-XML;
 
-$xml=simplexml_load_string($note);
+if (count($argv) != 2) {
+    echo "usage php xmltogo.php filename.xml\n";
+    exit;
+}
+
+$text = file_get_contents($argv[1]);
+$xml = simplexml_load_string($text);
 walkxml($xml, 0);
 
 function walkxml($xml, $indent)
@@ -31,6 +19,10 @@ function walkxml($xml, $indent)
         codeln($indent, "type $varname struct {");
         $indent++;
         codeln($indent, "XMLName xml.Name ". '`xml:"'. $xmltag. '"`');
+        foreach($xml->attributes() as $name => $_) {
+            $varname = makeVarname($name);
+            codeln($indent, $varname. ' string `xml:"'. $name. ',attr"`');
+        }
     } else {
         codeln($indent, "$varname string ". '`xml:"'. $xmltag. '"`');
     }
