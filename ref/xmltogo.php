@@ -23,6 +23,9 @@ function walkxml($xml, $indent)
             $varname = makeVarname($name);
             codeln($indent, $varname. ' string `xml:"'. $name. ',attr"`');
         }
+        if (strlen(trim(strval($xml))) > 0) {
+            codeln($indent, '//Value string `xml:",chardata"`');
+        }
     } else {
         codeln($indent, "$varname string ". '`xml:"'. $xmltag. '"`');
     }
